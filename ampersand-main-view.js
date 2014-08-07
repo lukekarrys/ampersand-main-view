@@ -1,16 +1,25 @@
 var View = require('ampersand-view');
 var ViewSwitcher = require('ampersand-view-switcher');
 var BaseRouter = require('ampersand-router');
-var defaults = require('defaults');
-var extend = require('lodash.assign');
-var pick = require('lodash.pick');
 var dom = require('ampersand-dom');
 
+// A naive defaults method that works for primitives
+// that are passed by value
+function defaults(options, _defaults) {
+  options = options || {};
+  Object.keys(_defaults).forEach(function(key) {
+    if (typeof options[key] === 'undefined') {
+      options[key] = _defaults[key];
+    }
+  });
+  return options;
+}
 
 module.exports = View.extend({
     autoRender: true,
 
     events: {
+        'click a[href^="#"]': 'handleHashLinkClick',
         'click a[href]': 'handleLinkClick'
     },
 
@@ -21,20 +30,29 @@ module.exports = View.extend({
             pageEvent: 'newPage',
             pageRegion: '[role="page"]',
             navRegion: '[role="navigation"]',
-            navActiveClass: 'active'
+            navActiveClass: 'active',
+            appGlobal: 'app'
         });
 
-        var viewOptions = pick(options, ['pageRegion', 'navRegion', 'navActiveClass']);
-        extend(this, viewOptions);
+        ['pageRegion', 'navRegion', 'navActiveClass'].forEach(function (key) {
+            this[key] = options[key];
+        }, this);
 
-        var Router = BaseRouter.extend(extend(this.router, {
-            triggerPage: function (PageConstructor) {
-                this.trigger(options.pageEvent, new PageConstructor());
-            }
-        }));
+        var routerOptions = options.router || this.router || {};
+        routerOptions.triggerPage = function (PageConstructor) {
+            this.trigger(options.pageEvent, new PageConstructor());
+        };
+
+        var Router = BaseRouter.extend(routerOptions);
 
         this.router = new Router();
         this.listenTo(this.router, options.pageEvent, this.updatePage.bind(this));
+
+        if (options.appGlobal && typeof window[options.appGlobal] !== 'undefined' && window[options.appGlobal] === Object(window[options.appGlobal])) {
+            window[options.appGlobal].view = this;
+            window[options.appGlobal].router = this.router;
+            window[options.appGlobal].navigate = this.navigate.bind(this);
+        }
     },
 
     render: function () {
@@ -67,7 +85,10 @@ module.exports = View.extend({
     },
 
     updateNavLinks: function (aTag) {
-        if (window.location.pathname === aTag.pathname) {
+        var samePage = aTag.pathname === window.location.pathname;
+        var isHashOnly = samePage && aTag.hash !== '' && aTag.hash.length > 1;
+
+        if (samePage && !isHashOnly) {
             dom.addClass(aTag, this.navActiveClass);
         } else {
             dom.removeClass(aTag, this.navActiveClass);
@@ -80,10 +101,27 @@ module.exports = View.extend({
         }
 
         var aTag = e.target;
+        var isLocal = aTag.host === window.location.host;
 
-        if (aTag.host === window.location.host) {
+        if (isLocal) {
             e.preventDefault();
-            this.router.history.navigate(aTag.pathname, {trigger: true});
+            this.navigate(aTag.pathname);
         }
+    },
+
+    handleHashLinkClick: function (e) {
+        if (e.metaKey || e.ctrlKey) {
+            return;
+        }
+
+        e.stopImmediatePropagation();
+    },
+
+    navigate: function (path, options) {
+        options || (options = {});
+        defaults(options, {
+            trigger: true
+        });
+        this.router.history.navigate(path, options);
     }
 });

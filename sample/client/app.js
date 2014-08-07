@@ -6,7 +6,7 @@ var MainView = require('../../ampersand-main-view').extend({
 
 window.app = {
     init: function () {
-        this.view = new MainView();
+        new MainView();
     }
 };
 

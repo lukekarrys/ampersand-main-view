@@ -14,7 +14,7 @@
 
     // main.jade compiled template
     templatizer["main"] = function tmpl_main() {
-        return '<div><nav role="navigation"><ul class="nav navbar-nav"><li><a href="/">Home</a></li><li><a href="/page1">Page 1</a></li><li><a href="/page2">Page 2</a></li></ul></nav><h1>Page:</h1><div role="page"></div></div>';
+        return '<div><nav role="navigation"><ul class="nav navbar-nav"><li><a href="/">Home</a></li><li><a href="/page1">Page 1</a></li><li><a href="/page2">Page 2</a></li><li><a href="#hash-link">Hash link</a></li></ul></nav><h1>Page:</h1><div role="page"></div></div>';
     };
 
     return templatizer;
