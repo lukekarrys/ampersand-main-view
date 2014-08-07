@@ -1,0 +1,33 @@
+{
+  "name": "ampersand-main-view",
+  "description": "An Ampersand view providing helpers to initialize and manage the main view of your single-page app",
+  "version": "1.0.0",
+  "author": "Luke Karrys <luke@lukekarrys.com>",
+  "dependencies": {
+    "ampersand-dom": "^1.2.1",
+    "ampersand-router": "^1.0.2",
+    "ampersand-view": "^6.0.10",
+    "ampersand-view-switcher": "^1.0.2",
+    "defaults": "^1.0.0",
+    "lodash.assign": "^2.4.1",
+    "lodash.pick": "^2.4.1"
+  },
+  "devDependencies": {
+    "domready": "^1.0.5",
+    "hapi": "^6.4.0",
+    "jshint": "^2.5.2",
+    "moonboots_hapi": "^2.4.0",
+    "precommit-hook": "^1.0.7",
+    "templatizer": "^0.3.6"
+  },
+  "keywords": [
+    "ampersand",
+    "ampersand-view",
+    "ampersand-router"
+  ],
+  "license": "MIT",
+  "main": "ampersand-main-view.js",
+  "scripts": {
+    "start": "node sample/server"
+  }
+}
