@@ -1,8 +1,10 @@
 {
   "name": "ampersand-main-view",
-  "description": "An Ampersand view providing helpers to initialize and manage the main view of your single-page app",
+  "description": "A view providing helpers to initialize and manage the main view of your single-page app",
   "version": "1.0.0",
   "author": "Luke Karrys <luke@lukekarrys.com>",
+  "browser": "ampersand-main-view.js",
+  "bugs": "https://github.com/lukekarrys/ampersand-main-view/issues",
   "dependencies": {
     "ampersand-dom": "^1.2.1",
     "ampersand-router": "^1.0.2",
@@ -20,6 +22,7 @@
     "precommit-hook": "^1.0.7",
     "templatizer": "^0.3.6"
   },
+  "homepage": "https://github.com/lukekarrys/ampersand-main-view",
   "keywords": [
     "ampersand",
     "ampersand-view",
@@ -27,6 +30,10 @@
   ],
   "license": "MIT",
   "main": "ampersand-main-view.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lukekarrys/ampersand-main-view"
+  },
   "scripts": {
     "start": "node sample/server"
   }
