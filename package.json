@@ -8,7 +8,7 @@
   "dependencies": {
     "ampersand-dom": "^1.2.1",
     "ampersand-router": "^1.0.2",
-    "ampersand-view": "^6.0.10",
+    "ampersand-view": "git://github.com/ampersandjs/ampersand-view#merge-superclass",
     "ampersand-view-switcher": "^1.0.2"
   },
   "devDependencies": {

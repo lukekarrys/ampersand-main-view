@@ -16,23 +16,6 @@ function defaults(options, _defaults) {
 }
 
 
-// Merge parent events onto child
-// TODO: this currently gets called for all future View.extend calls
-// and it shouldnt since that unexpectedly changes behavior
-var ViewExtend = View.extend;
-View.extend = function () {
-    var child = ViewExtend.apply(this, arguments);
-    var parent = child.__super__;
-    var events = parent.events || {};
-
-    Object.keys(events).forEach(function (event) {
-        child.prototype.events[event] = events[event];
-    });
-
-    return child;
-};
-
-
 module.exports = View.extend({
     autoRender: true,
 
