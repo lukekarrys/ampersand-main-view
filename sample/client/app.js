@@ -1,14 +1,12 @@
-var MainView = require('../../ampersand-main-view').extend({
-    template: require('./templates').main,
-    router: require('./router')
-});
+var MainView = require('./main');
 
 
 window.app = {
     init: function () {
-        new MainView();
+        new MainView({
+            app: this
+        });
     }
 };
-
 
 require('domready')(window.app.init.bind(window.app));

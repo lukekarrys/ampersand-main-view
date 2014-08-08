@@ -3,8 +3,8 @@ var ViewSwitcher = require('ampersand-view-switcher');
 var BaseRouter = require('ampersand-router');
 var dom = require('ampersand-dom');
 
-// A naive defaults method that works for primitives
-// that are passed by value
+
+// A defaults method that doesnt clone anything
 function defaults(options, _defaults) {
   options = options || {};
   Object.keys(_defaults).forEach(function(key) {
@@ -14,6 +14,24 @@ function defaults(options, _defaults) {
   });
   return options;
 }
+
+
+// Merge parent events onto child
+// TODO: this currently gets called for all future View.extend calls
+// and it shouldnt since that unexpectedly changes behavior
+var ViewExtend = View.extend;
+View.extend = function () {
+    var child = ViewExtend.apply(this, arguments);
+    var parent = child.__super__;
+    var events = parent.events || {};
+
+    Object.keys(events).forEach(function (event) {
+        child.prototype.events[event] = events[event];
+    });
+
+    return child;
+};
+
 
 module.exports = View.extend({
     autoRender: true,
@@ -31,7 +49,8 @@ module.exports = View.extend({
             pageRegion: '[role="page"]',
             navRegion: '[role="navigation"]',
             navActiveClass: 'active',
-            appGlobal: 'app'
+            app: null,
+            router: null
         });
 
         ['pageRegion', 'navRegion', 'navActiveClass'].forEach(function (key) {
@@ -48,21 +67,22 @@ module.exports = View.extend({
         this.router = new Router();
         this.listenTo(this.router, options.pageEvent, this.updatePage.bind(this));
 
-        if (options.appGlobal && typeof window[options.appGlobal] !== 'undefined' && window[options.appGlobal] === Object(window[options.appGlobal])) {
-            window[options.appGlobal].view = this;
-            window[options.appGlobal].router = this.router;
-            window[options.appGlobal].navigate = this.navigate.bind(this);
+        if (options.app && options.app === Object(options.app)) {
+            options.app.view = this;
+            options.app.router = this.router;
+            options.app.navigate = this.navigate.bind(this);
         }
     },
 
     render: function () {
         this.renderWithTemplate(this);
-        this.initViewSwitcher();
-        this.startRouter();
 
         if (!this.el.parentNode) {
             document.body.appendChild(this.el);
         }
+
+        this.initViewSwitcher();
+        this.startRouter();
 
         return this;
     },

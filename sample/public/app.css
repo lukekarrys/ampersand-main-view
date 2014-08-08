@@ -1,3 +1,7 @@
 a.active {
     color: red;
 }
+
+h1.clicked, h2.clicked {
+    text-decoration: underline;
+}

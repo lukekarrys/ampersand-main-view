@@ -1,6 +1,6 @@
-var AmpersandPage = require('ampersand-view');
+var View = require('ampersand-view');
 function PageWithTitle(title) {
-    return AmpersandPage.extend({template: '<h2>' + title + '</h2>'});
+    return View.extend({template: '<h2>' + title + '</h2>'});
 }
 
 module.exports = {
