@@ -16,8 +16,7 @@
     "hapi": "^6.4.0",
     "jshint": "^2.5.2",
     "moonboots_hapi": "^2.4.0",
-    "precommit-hook": "^1.0.7",
-    "templatizer": "^0.3.6"
+    "precommit-hook": "^1.0.7"
   },
   "homepage": "https://github.com/lukekarrys/ampersand-main-view",
   "keywords": [

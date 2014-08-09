@@ -8,5 +8,6 @@
   "unused": true,
   "trailing": true,
   "expr": true,
-  "browser": true
+  "browser": true,
+  "curly": false
 }

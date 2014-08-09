@@ -2,6 +2,7 @@ var View = require('ampersand-view');
 var ViewSwitcher = require('ampersand-view-switcher');
 var BaseRouter = require('ampersand-router');
 var dom = require('ampersand-dom');
+var slice = Array.prototype.slice;
 
 
 // A defaults method that doesnt clone anything
@@ -71,7 +72,9 @@ module.exports = View.extend({
     },
 
     initViewSwitcher: function () {
-        this.pageSwitcher = new ViewSwitcher(this.get(this.pageRegion));
+        var pageRegion = typeof this.pageRegion === 'string' ?
+            this.get(this.pageRegion) : this.pageRegion;
+        this.pageSwitcher = new ViewSwitcher(pageRegion);
     },
 
     startRouter: function () {
@@ -84,7 +87,12 @@ module.exports = View.extend({
     },
 
     updateNav: function () {
-        this.getAll(this.navRegion + ' a').forEach(this.updateNavLinks, this);
+        var navRegion = typeof this.navRegion === 'string' ?
+            this.get(this.navRegion) : this.navRegion;
+        if (navRegion) {
+            slice.call(navRegion.querySelectorAll('a'))
+                .forEach(this.updateNavLinks, this);
+        }
     },
 
     updateNavLinks: function (aTag) {
@@ -117,6 +125,9 @@ module.exports = View.extend({
             return;
         }
 
+        // TODO: decide what to do with hash links
+        // Currently this will add the hash to the url
+        // but it wont bubble up to `handleLinkClick`
         e.stopImmediatePropagation();
     },
 
