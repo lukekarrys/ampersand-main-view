@@ -25,12 +25,12 @@ After all that is done, the newly created router will start the clientside routi
 flow. You can call `this.triggerPage(PageConstructor)` from inside any router
 function, and it will initialize that `PageConstructor` inside the `pageRegion`.
 
-That's a high-level overview of what it does. Check out the API reference below
+That's a high-level overviewg of what it does. Check out the API reference below
 to see what each function does.
 
+## API
 
-
-## Options
+### Options
 
 ```js
 // Defaults
@@ -44,30 +44,30 @@ new MainView({
 })
 ```
 
-### `pageEvent` (String, default: `newPage`)
+#### `pageEvent` (String, default: `newPage`)
 
 This is the event that will be trigged on the `router` when `router.triggerPage`
 is called.
 
-### `pageRegion` (selector String or HTMLElement, default: `[role=page]`)
+#### `pageRegion` (selector String or HTMLElement, default: `[role=page]`)
 
 This is the element on the page where the view switcher will swap out pages.
 
-### `navRegion` (selector String or HTMLElement, default: `[role=navigation]`)
+#### `navRegion` (selector String or HTMLElement, default: `[role=navigation]`)
 
 This is the element on the page with navigation links. Navigation links will be
 toggled with the `navActiveClass` based on if their `pathname` matches the
 current page's pathname.
 
-### `navActiveClass` (String, default: 'active')
+#### `navActiveClass` (String, default: 'active')
 
 This is a class name which will be added to active links in the `navRegion`.
 
-### `router` (Object, required)
+#### `router` (Object, required)
 
 This object will be passed directly to `Router.extend`.
 
-### `app` (Object, default: null)
+#### `app` (Object, default: null)
 
 If you have an application object you can pass it in and a few properties will
 be attched to it as a convenience. `router` and `view` will be the created router
@@ -75,9 +75,9 @@ and the main view. The method `navigate(path)` will also be attached.
 
 
 
-## Router Methods
+### Router Methods
 
-### `router.triggerPage(PageConstructor)`
+#### `router.triggerPage(PageConstructor)`
 
 This method can be called on the router to make a new page. This allows you to do
 something like this in the `router` options that you pass to the main view:
@@ -99,14 +99,14 @@ module.exports = {
 
 
 
-## View Methods
+### View Methods
 
-### `render`
-### `initViewSwitcher`
-### `startRouter`
-### `updatePage`
-### `updateNav`
-### `updateNavLinks`
-### `handleLinkClick`
-### `handleHashLinkClick`
-### `navigate`
+#### `render`
+#### `initViewSwitcher`
+#### `startRouter`
+#### `updatePage`
+#### `updateNav`
+#### `updateNavLinks`
+#### `handleLinkClick`
+#### `handleHashLinkClick`
+#### `navigate`
