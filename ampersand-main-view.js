@@ -83,6 +83,7 @@ module.exports = View.extend({
 
     updatePage: function (page) {
         this.pageSwitcher.set(page);
+        this.currentPage = page;
         this.updateNav();
     },
 
