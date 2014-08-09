@@ -83,18 +83,20 @@ This method can be called on the router to make a new page. This allows you to d
 something like this in the `router` options that you pass to the main view:
 
 ```js
-module.exports = {
-    routes: {
-        '': 'index',
-        'users': 'users'
-    },
-    index: function () {
-        this.triggerPage(HomePage);
-    },
-    users: function () {
-        this.triggerPage(UsersPage);
+new MainView({
+    router: {
+        routes: {
+            '': 'index',
+            'users': 'users'
+        },
+        index: function () {
+            this.triggerPage(HomePage);
+        },
+        users: function () {
+            this.triggerPage(UsersPage);
+        }
     }
-};
+});
 ```
 
 
