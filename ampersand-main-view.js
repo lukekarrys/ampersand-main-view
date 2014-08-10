@@ -41,15 +41,21 @@ module.exports = View.extend({
             this[key] = options[key];
         }, this);
 
-        var routerOptions = options.router || this.router || {};
-        routerOptions.triggerPage = function (PageConstructor) {
-            this.trigger(options.pageEvent, new PageConstructor());
-        };
+        var routerOptions = options.router || this.router;
+        var Router;
 
-        var Router = BaseRouter.extend(routerOptions);
+        if (routerOptions && routerOptions == Object(routerOptions)) {
+            routerOptions.triggerPage = function (PageConstructor) {
+                this.trigger(options.pageEvent, new PageConstructor());
+            };
 
-        this.router = new Router();
-        this.listenTo(this.router, options.pageEvent, this.updatePage.bind(this));
+            Router = BaseRouter.extend(routerOptions);
+
+            this.router = new Router();
+            this.listenTo(this.router, options.pageEvent, this.updatePage.bind(this));
+        } else {
+            throw new Error('ampersand-main-view requires a router');
+        }
 
         if (options.app && options.app === Object(options.app)) {
             options.app.view = this;

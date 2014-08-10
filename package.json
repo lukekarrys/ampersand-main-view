@@ -12,11 +12,16 @@
     "ampersand-view-switcher": "^1.0.2"
   },
   "devDependencies": {
+    "browserify": "^5.9.1",
     "domready": "^1.0.5",
+    "function-bind": "^1.0.0",
     "hapi": "^6.4.0",
     "jshint": "^2.5.2",
     "moonboots_hapi": "^2.4.0",
-    "precommit-hook": "^1.0.7"
+    "precommit-hook": "^1.0.7",
+    "tap-spec": "^0.2.0",
+    "tape": "^2.14.0",
+    "tape-run": "^0.2.0"
   },
   "homepage": "https://github.com/lukekarrys/ampersand-main-view",
   "keywords": [
@@ -31,6 +36,7 @@
     "url": "git://github.com/lukekarrys/ampersand-main-view"
   },
   "scripts": {
-    "start": "node sample/server"
+    "start": "node sample/server",
+    "test": "browserify test/index.js | tape-run | tap-spec"
   }
 }
