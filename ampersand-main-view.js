@@ -4,24 +4,14 @@ var BaseRouter = require('ampersand-router');
 var dom = require('ampersand-dom');
 var slice = Array.prototype.slice;
 
-
-// A defaults method that doesnt clone anything
-function defaults(options, _defaults) {
-  options = options || {};
-  Object.keys(_defaults).forEach(function(key) {
-    if (typeof options[key] === 'undefined') {
-      options[key] = _defaults[key];
-    }
-  });
-  return options;
-}
+var defaults = require('./lib/defaults');
+var isLocal = require('./lib/isLocal');
 
 
 module.exports = View.extend({
     autoRender: true,
 
     events: {
-        'click a[href^="#"]': 'handleHashLinkClick',
         'click a[href]': 'handleLinkClick'
     },
 
@@ -103,39 +93,28 @@ module.exports = View.extend({
     },
 
     updateNavLinks: function (aTag) {
-        var samePage = aTag.pathname === window.location.pathname;
-        var isHashOnly = samePage && aTag.hash !== '' && aTag.hash.length > 1;
+        var isCurrentPage = isLocal.isCurrentPage(aTag);
 
-        if (samePage && !isHashOnly) {
+        if (isCurrentPage) {
             dom.addClass(aTag, this.navActiveClass);
         } else {
             dom.removeClass(aTag, this.navActiveClass);
         }
     },
 
-    handleLinkClick: function (e) {
-        if (e.metaKey || e.ctrlKey) {
-            return;
-        }
+    handleLinkClick: function (event) {
+        var localPathname = isLocal.pathname(event);
 
-        var aTag = e.target;
-        var isLocal = aTag.host === window.location.host;
-
-        if (isLocal) {
-            e.preventDefault();
-            this.navigate(aTag.pathname);
+        if (localPathname) {
+            event.preventDefault();
+            this.navigate(localPathname);
+        } else if (isLocal.hash(event)) {
+            this.handleHashLinkClick(event);
         }
     },
 
-    handleHashLinkClick: function (e) {
-        if (e.metaKey || e.ctrlKey) {
-            return;
-        }
-
-        // TODO: decide what to do with hash links
-        // Currently this will add the hash to the url
-        // but it wont bubble up to `handleLinkClick`
-        e.stopImmediatePropagation();
+    handleHashLinkClick: function (event) {
+        event.preventDefault();
     },
 
     navigate: function (path, options) {

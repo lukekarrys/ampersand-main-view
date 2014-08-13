@@ -10,7 +10,7 @@ var app_config = {
 };
 
 
-var server = new Hapi.Server('127.0.0.1', 3001);
+var server = new Hapi.Server('localhost', 3001);
 server.pack.register([{
     plugin: require('moonboots_hapi'),
     options: app_config
