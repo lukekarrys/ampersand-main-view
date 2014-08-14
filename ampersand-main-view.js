@@ -5,7 +5,7 @@ var dom = require('ampersand-dom');
 var slice = Array.prototype.slice;
 
 var defaults = require('./lib/defaults');
-var isLocal = require('./lib/isLocal');
+var links = require('./lib/linkNormalizer');
 
 
 module.exports = View.extend({
@@ -93,7 +93,7 @@ module.exports = View.extend({
     },
 
     updateNavLinks: function (aTag) {
-        var isCurrentPage = isLocal.isCurrentPage(aTag);
+        var isCurrentPage = links.currentPage(aTag, this.router.history.fragment);
 
         if (isCurrentPage) {
             dom.addClass(aTag, this.navActiveClass);
@@ -103,12 +103,12 @@ module.exports = View.extend({
     },
 
     handleLinkClick: function (event) {
-        var localPathname = isLocal.pathname(event);
+        var localPathname = links.pathname(event);
 
         if (localPathname) {
             event.preventDefault();
             this.navigate(localPathname);
-        } else if (isLocal.hash(event)) {
+        } else if (links.hash(event)) {
             this.handleHashLinkClick(event);
         }
     },

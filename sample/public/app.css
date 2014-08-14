@@ -1,7 +1,3 @@
-a.active {
-    color: red;
-}
-
-.underlined {
-    text-decoration: underline;
-}
+a, a:visited { color: green; }
+a.active, a:visited.active { color: red; }
+.underlined { text-decoration: underline; }

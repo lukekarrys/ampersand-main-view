@@ -9,4 +9,10 @@ window.app = {
     }
 };
 
-require('domready')(window.app.init.bind(window.app));
+
+require('domready')(function () {
+    // UGHWHAT? IE9 fails without this setTimeout
+    setTimeout(function () {
+        window.app.init();
+    }, 1);
+});
