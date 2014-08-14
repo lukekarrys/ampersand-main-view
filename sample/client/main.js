@@ -1,6 +1,6 @@
 var MainView = require('../../ampersand-main-view');
 var dom = require('ampersand-dom');
-var nav = require('./navTemplates')();
+var nav = require('./navTemplate');
 
 
 module.exports = MainView.extend({
