@@ -2,10 +2,10 @@ var View = require('ampersand-view');
 var ViewSwitcher = require('ampersand-view-switcher');
 var BaseRouter = require('ampersand-router');
 var dom = require('ampersand-dom');
-var slice = Array.prototype.slice;
+var links = require('local-links');
 
+var slice = Array.prototype.slice;
 var defaults = require('./lib/defaults');
-var links = require('./lib/linkNormalizer');
 
 
 module.exports = View.extend({
@@ -93,7 +93,7 @@ module.exports = View.extend({
     },
 
     updateNavLinks: function (aTag) {
-        var isCurrentPage = links.currentPage(aTag, this.router.history.fragment);
+        var isCurrentPage = links.active(aTag, this.router.history.fragment);
 
         if (isCurrentPage) {
             dom.addClass(aTag, this.navActiveClass);

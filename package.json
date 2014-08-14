@@ -9,7 +9,8 @@
     "ampersand-dom": "^1.2.1",
     "ampersand-router": "^1.0.2",
     "ampersand-view": "git://github.com/ampersandjs/ampersand-view#merge-superclass",
-    "ampersand-view-switcher": "^1.0.2"
+    "ampersand-view-switcher": "^1.0.2",
+    "local-links": "^1.0.2"
   },
   "devDependencies": {
     "browserify": "^5.9.1",
