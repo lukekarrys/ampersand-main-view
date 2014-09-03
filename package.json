@@ -10,7 +10,7 @@
     "ampersand-router": "^1.0.2",
     "ampersand-view": "git://github.com/ampersandjs/ampersand-view#merge-superclass",
     "ampersand-view-switcher": "^1.0.2",
-    "local-links": "^1.0.2"
+    "local-links": "^1.0.5"
   },
   "devDependencies": {
     "browserify": "^5.9.1",
@@ -19,6 +19,7 @@
     "hapi": "^6.4.0",
     "jshint": "^2.5.2",
     "moonboots_hapi": "^2.4.0",
+    "phantomjs": "^1.9.7-15",
     "precommit-hook": "^1.0.7",
     "tap-spec": "^0.2.0",
     "tape": "^2.14.0",
