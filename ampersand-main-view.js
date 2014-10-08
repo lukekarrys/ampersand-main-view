@@ -1,11 +1,43 @@
-var View = require('ampersand-view');
-var ViewSwitcher = require('ampersand-view-switcher');
-var BaseRouter = require('ampersand-router');
 var dom = require('ampersand-dom');
 var links = require('local-links');
+var View = require('ampersand-view');
+var BaseRouter = require('ampersand-router');
+var ViewSwitcher = require('ampersand-view-switcher');
 
-var slice = Array.prototype.slice;
-var defaults = require('./lib/defaults');
+// Find an selector within an element
+var findEl = function (el, selector) {
+    return Array.prototype.slice.call(el.querySelectorAll(selector));
+};
+
+// Lodash util methods
+var defaults = require('lodash.defaults');
+var extend = require('lodash.assign');
+var pick = require('lodash.pick');
+var bind = require('lodash.bind');
+var each = require('lodash.foreach');
+var result = require('lodash.result');
+
+// Waiting for https://github.com/AmpersandJS/ampersand-view/pull/40
+var BaseExtend = View.extend;
+View.extend = function () {
+    var child = BaseExtend.apply(this, arguments);
+    var childProto = child.prototype;
+    var parentProto = child.__super__;
+    var propName = 'events';
+
+    var parentDefs = result(parentProto, propName);
+    var childDefs = result(childProto, propName);
+
+    if (parentDefs && parentDefs === Object(parentDefs)) {
+        each(parentDefs, function (parentDefValue, parentDefKey) {
+            if (typeof childDefs[parentDefKey] === 'undefined') {
+                childProto[propName][parentDefKey] = parentDefValue;
+            }
+        });
+    }
+
+    return child;
+};
 
 
 module.exports = View.extend({
@@ -18,40 +50,29 @@ module.exports = View.extend({
     initialize: function (options) {
         options || (options = {});
 
-        defaults(options, {
+        var defaultOptions = {
             pageEvent: 'newPage',
-            pageRegion: '[role="page"]',
-            navRegion: '[role="navigation"]',
-            navActiveClass: 'active',
-            app: null,
+            pageRegion: '[data-hook="page"]',
+            pageOptions: {},
+            navRegion: '[data-hook="navigation"]',
+            navItem: 'a',
+            navActiveClass: 'active'
+        };
+
+        defaults(options, extend({}, defaultOptions, {
             router: null
-        });
+        }));
 
-        ['pageRegion', 'navRegion', 'navActiveClass'].forEach(function (key) {
-            this[key] = options[key];
-        }, this);
+        // Add all defaultOptions keys as props on this view instance
+        extend(this, pick(options, Object.keys(defaultOptions)));
 
-        var routerOptions = options.router || this.router;
-        var Router;
+        var routerOptions = options.router || this.router || {};
+        routerOptions.triggerPage = function (page) {
+            this.trigger(options.pageEvent, page);
+        };
 
-        if (routerOptions && routerOptions == Object(routerOptions)) {
-            routerOptions.triggerPage = function (PageConstructor) {
-                this.trigger(options.pageEvent, new PageConstructor());
-            };
-
-            Router = BaseRouter.extend(routerOptions);
-
-            this.router = new Router();
-            this.listenTo(this.router, options.pageEvent, this.updatePage.bind(this));
-        } else {
-            throw new Error('ampersand-main-view requires a router');
-        }
-
-        if (options.app && options.app === Object(options.app)) {
-            options.app.view = this;
-            options.app.router = this.router;
-            options.app.navigate = this.navigate.bind(this);
-        }
+        this.router = new (BaseRouter.extend(routerOptions))();
+        this.listenTo(this.router, options.pageEvent, bind(this.updatePage, this));
     },
 
     render: function () {
@@ -61,16 +82,15 @@ module.exports = View.extend({
             document.body.appendChild(this.el);
         }
 
-        this.initViewSwitcher();
+        this.startViewSwitcher();
         this.startRouter();
 
         return this;
     },
 
-    initViewSwitcher: function () {
-        var pageRegion = typeof this.pageRegion === 'string' ?
-            this.get(this.pageRegion) : this.pageRegion;
-        this.pageSwitcher = new ViewSwitcher(pageRegion);
+    startViewSwitcher: function () {
+        var pageRegion = this.query(this.pageRegion);
+        this.pageSwitcher = new ViewSwitcher(pageRegion, this.pageOptions);
     },
 
     startRouter: function () {
@@ -80,31 +100,31 @@ module.exports = View.extend({
     updatePage: function (page) {
         this.pageSwitcher.set(page);
         this.currentPage = page;
-        this.updateNav();
+        this.setActiveNavItems();
     },
 
-    updateNav: function () {
-        var navRegion = typeof this.navRegion === 'string' ?
-            this.get(this.navRegion) : this.navRegion;
-        if (navRegion) {
-            slice.call(navRegion.querySelectorAll('a'))
-                .forEach(this.updateNavLinks, this);
+    setActiveNavItems: function () {
+        var navRegion = this.query(this.navRegion);
+        if (navRegion && this.navItem) {
+            findEl(navRegion, this.navItem).forEach(this.setActiveNavItem, this);
         }
     },
 
-    updateNavLinks: function (aTag) {
-        var isCurrentPage = links.active(aTag, this.router.history.fragment);
-
-        if (isCurrentPage) {
+    setActiveNavItem: function (aTag) {
+        if (!this.navActiveClass) return;
+        if (this.isNavItemActive(aTag)) {
             dom.addClass(aTag, this.navActiveClass);
         } else {
             dom.removeClass(aTag, this.navActiveClass);
         }
     },
 
+    isNavItemActive: function (aTag) {
+        return links.active(aTag, this.router.history.fragment);
+    },
+
     handleLinkClick: function (event) {
         var localPathname = links.pathname(event);
-
         if (localPathname) {
             event.preventDefault();
             this.navigate(localPathname);
@@ -113,15 +133,12 @@ module.exports = View.extend({
         }
     },
 
-    handleHashLinkClick: function (event) {
-        event.preventDefault();
-    },
+    // No-op
+    handleHashLinkClick: function () {},
 
     navigate: function (path, options) {
         options || (options = {});
-        defaults(options, {
-            trigger: true
-        });
+        defaults(options, { trigger: true });
         this.router.history.navigate(path, options);
     }
 });

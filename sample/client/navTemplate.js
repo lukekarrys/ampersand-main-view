@@ -11,7 +11,8 @@ var navs = [
     ['/page1', 'Page 1'],
     ['/page2', 'Page 2'],
     ['#', 'Hash Link', 'hash-link'],
-    ['#hask-link', 'Hash Link', 'hash-link']
+    ['#hask-link', 'Hash Link', 'hash-link'],
+    ['#u-hask-link', 'Hash Link', 'unprevented-hash-link']
 ];
 
 module.exports = navLinks(navs);

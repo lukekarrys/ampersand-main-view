@@ -1,18 +1,13 @@
 var MainView = require('./main');
+var bind = require('lodash.bind');
 
 
 window.app = {
     init: function () {
-        new MainView({
-            app: this
-        });
+        this.view = new MainView();
+        this.router = this.view.router;
+        this.navigate = this.view.navigate;
     }
 };
 
-
-require('domready')(function () {
-    // UGHWHAT? IE9 fails without this setTimeout
-    setTimeout(function () {
-        window.app.init();
-    }, 1);
-});
+require('domready')(bind(window.app.init, window.app));

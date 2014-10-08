@@ -16,20 +16,10 @@ function PageWithTitle(title) {
 
 module.exports = {
     routes: {
-        '': 'index',
-        'page1': 'page1',
-        'page2': 'page2'
+        '*path': 'page'
     },
 
-    index: function () {
-        this.triggerPage(PageWithTitle('Home'));
-    },
-
-    page1: function () {
-        this.triggerPage(PageWithTitle('Page 1'));
-    },
-
-    page2: function () {
-        this.triggerPage(PageWithTitle('Page 2'));
+    page: function (name) {
+        this.triggerPage(new (PageWithTitle(name === null ? 'home' : name))());
     }
 };
