@@ -9,7 +9,15 @@ A view providing helpers to initialize and manage the main view of your single-p
 ## Install
 
 **This hasn't been published to npm yet. It will be after some
-[decisions are made](https://github.com/lukekarrys/ampersand-main-view/issues).**
+[issues are closes](https://github.com/lukekarrys/ampersand-main-view/issues).**
+
+
+## Why
+
+There is a fair amount that happens every time I start up a new [`ampersandjs`](http://ampersandjs.com/)
+project. This aims to be a starting point for a basic main view that you would have in your app.
+It handles link clicks, navigation, intial rendering to the body, routing, page switching,
+and navigation link activating.
 
 
 ## What does it do?
@@ -29,9 +37,9 @@ function, and it will initialize that `pageInstance` inside the `pageRegion`.
 That's a high-level overviewg of what it does. Check out the API reference below
 to see what each function does.
 
+
+
 ## API
-
-
 
 ### Options
 
