@@ -51,27 +51,32 @@ module.exports = View.extend({
         options || (options = {});
 
         var defaultOptions = {
-            pageEvent: 'newPage',
-            pageRegion: '[data-hook="page"]',
-            pageOptions: {},
-            navRegion: '[data-hook="navigation"]',
-            navItem: 'a',
-            navActiveClass: 'active'
+            pageEvent: this.pageEvent || 'newPage',
+            pageRegion: this.pageRegion || '[data-hook="page"]',
+            pageOptions: this.pageOptions || {},
+            navRegion: this.navRegion || '[data-hook="navigation"]',
+            navItem: this.navItem || 'a',
+            navActiveClass: this.navActiveClass || 'active',
+            router: this.router || {}
         };
 
-        defaults(options, extend({}, defaultOptions, {
-            router: null
-        }));
+        defaults(options, defaultOptions);
 
         // Add all defaultOptions keys as props on this view instance
         extend(this, pick(options, Object.keys(defaultOptions)));
 
-        var routerOptions = options.router || this.router || {};
-        routerOptions.triggerPage = function (page) {
+        var router = options.router;
+        router.triggerPage = function (page) {
             this.trigger(options.pageEvent, page);
         };
 
-        this.router = new (BaseRouter.extend(routerOptions))();
+        // Router has already been initialized
+        if (router.history && router.history.start) {
+            this.router = router;
+        } else {
+            this.router = new (BaseRouter.extend(router))();
+        }
+
         this.listenTo(this.router, options.pageEvent, bind(this.updatePage, this));
     },
 

@@ -42,8 +42,8 @@ new MainView({
     navRegion: '[data-hook="navigation"]',
     navItem: 'a',
     navActiveClass: 'active',
-    router: null
-})
+    router: {}
+});
 ```
 
 #### `pageEvent` (String, default: `newPage`)
@@ -78,9 +78,10 @@ the `navRegion`.  Set to a falsy value to cancel all nav updating.
 This is a class name which will be added to `navItem`s in the `navRegion`.
  Set to a falsy value to cancel all nav updating.
 
-#### `router` (Object, default: `{}`)
+#### `router` (Object or Router, default: `{}`)
 
-This object will be passed directly to `Router.extend`.
+This object will be passed directly to `Router.extend` and then initialized. If
+you pass in a Router, it won't be initiliazed again. 
 
 
 
@@ -113,7 +114,7 @@ new MainView({
 ### View Methods
 
 The main idea behind `ampersand-main-view` is to have some sane defaults for the
-main view of your app. All the methods below can be overwritten with `extend` should
+main view of your app. All the methods below can be overridden with `extend` should
 you need more flexibility.
 
 #### Initialization Methods

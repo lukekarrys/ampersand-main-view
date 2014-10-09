@@ -19,9 +19,8 @@
     "lodash.result": "^2.4.1"
   },
   "devDependencies": {
-    "browserify": "^5.9.1",
+    "browserify": "^6.0.3",
     "domready": "^1.0.5",
-    "function-bind": "^1.0.0",
     "hapi": "^6.4.0",
     "jshint": "^2.5.2",
     "moonboots_hapi": "^2.4.0",
@@ -47,6 +46,6 @@
   "scripts": {
     "demo": "node sample/server",
     "start": "run-browser test/*",
-    "test": "browserify test/index.js | tape-run | tap-spec"
+    "test": "browserify test/*.js | tape-run | tap-spec"
   }
 }
