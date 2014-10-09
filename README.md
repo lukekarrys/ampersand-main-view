@@ -1,6 +1,8 @@
 ampersand-main-view
 ===================
 
+[![Build Status](https://travis-ci.org/lukekarrys/ampersand-main-view.png?branch=master)](https://travis-ci.org/lukekarrys/ampersand-main-view)
+
 A view providing helpers to initialize and manage the main view of your single-page app.
 
 
