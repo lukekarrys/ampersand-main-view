@@ -3,13 +3,14 @@ ampersand-main-view
 
 [![Build Status](https://travis-ci.org/lukekarrys/ampersand-main-view.png?branch=master)](https://travis-ci.org/lukekarrys/ampersand-main-view)
 
+[![NPM](https://nodei.co/npm/ampersand-main-view.png)](https://nodei.co/npm/ampersand-main-view/)
+
 A view providing helpers to initialize and manage the main view of your single-page app.
 
 
 ## Install
 
-**This hasn't been published to npm yet. It will be after some
-[issues are closes](https://github.com/lukekarrys/ampersand-main-view/issues).**
+`npm install ampersand-main-view --save`
 
 
 ## Why
