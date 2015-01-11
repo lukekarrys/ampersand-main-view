@@ -14,30 +14,6 @@ var defaults = require('lodash.defaults');
 var extend = require('lodash.assign');
 var pick = require('lodash.pick');
 var bind = require('lodash.bind');
-var each = require('lodash.foreach');
-var result = require('lodash.result');
-
-// Waiting for https://github.com/AmpersandJS/ampersand-view/pull/40
-var BaseExtend = View.extend;
-View.extend = function () {
-    var child = BaseExtend.apply(this, arguments);
-    var childProto = child.prototype;
-    var parentProto = child.__super__;
-    var propName = 'events';
-
-    var parentDefs = result(parentProto, propName);
-    var childDefs = result(childProto, propName);
-
-    if (parentDefs && parentDefs === Object(parentDefs)) {
-        each(parentDefs, function (parentDefValue, parentDefKey) {
-            if (typeof childDefs[parentDefKey] === 'undefined') {
-                childProto[propName][parentDefKey] = parentDefValue;
-            }
-        });
-    }
-
-    return child;
-};
 
 
 module.exports = View.extend({
