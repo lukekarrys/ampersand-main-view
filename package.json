@@ -34,17 +34,22 @@
   "homepage": "https://github.com/lukekarrys/ampersand-main-view",
   "keywords": [
     "ampersand",
-    "ampersand-view",
-    "ampersand-router"
+    "ampersand-router",
+    "ampersand-view"
   ],
   "license": "MIT",
   "main": "ampersand-main-view.js",
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/lukekarrys/ampersand-main-view"
   },
   "scripts": {
     "demo": "node sample/server",
+    "lint": "jshint .",
     "start": "run-browser test/*",
     "test": "browserify test/*.js | tape-run | tap-spec"
   }
