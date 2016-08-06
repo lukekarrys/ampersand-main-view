@@ -10,10 +10,10 @@ var findEl = function (el, selector) {
 };
 
 // Lodash util methods
-var defaults = require('lodash.defaults');
-var extend = require('lodash.assign');
-var pick = require('lodash.pick');
-var bind = require('lodash.bind');
+var defaults = require('lodash/defaults');
+var extend = require('lodash/assign');
+var pick = require('lodash/pick');
+var bind = require('lodash/bind');
 
 
 module.exports = View.extend({

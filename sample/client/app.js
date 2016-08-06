@@ -1,5 +1,5 @@
 var MainView = require('./main');
-var bind = require('lodash.bind');
+var bind = require('lodash/bind');
 
 
 window.app = {

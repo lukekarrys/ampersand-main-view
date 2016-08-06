@@ -1,5 +1,5 @@
 var test = require('tape');
-var extend = require('lodash.assign');
+var extend = require('lodash/assign');
 var routerOptions = require('../sample/client/router');
 var AmpRouter = require('ampersand-router');
 var MainView = require('../ampersand-main-view');

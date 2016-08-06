@@ -11,12 +11,7 @@
     "ampersand-view": "^10.0.1",
     "ampersand-view-switcher": "^2.1.0",
     "local-links": "^1.4.0",
-    "lodash.assign": "^4.1.0",
-    "lodash.bind": "^4.2.0",
-    "lodash.defaults": "^4.1.0",
-    "lodash.foreach": "^4.4.1",
-    "lodash.pick": "^4.3.0",
-    "lodash.result": "^4.5.1"
+    "lodash": "^4.14.1"
   },
   "devDependencies": {
     "browserify": "^13.1.0",
