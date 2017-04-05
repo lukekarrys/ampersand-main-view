@@ -14,7 +14,7 @@
     "lodash": "^4.14.1"
   },
   "devDependencies": {
-    "browserify": "^14.0.0",
+    "browserify": "^14.3.0",
     "domready": "^1.0.8",
     "electron": "^1.6.1",
     "git-validate": "^2.2.2",
