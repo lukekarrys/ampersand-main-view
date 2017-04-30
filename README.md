@@ -1,6 +1,8 @@
 ampersand-main-view
 ===================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/lukekarrys/ampersand-main-view.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/lukekarrys/ampersand-main-view.png?branch=master)](https://travis-ci.org/lukekarrys/ampersand-main-view)
 
 [![NPM](https://nodei.co/npm/ampersand-main-view.png)](https://nodei.co/npm/ampersand-main-view/)
