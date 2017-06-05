@@ -18,7 +18,7 @@
     "domready": "^1.0.8",
     "electron": "^1.6.1",
     "git-validate": "^2.2.2",
-    "hapi": "^16.0.0",
+    "hapi": "^16.4.1",
     "moonboots_hapi": "^7.0.0",
     "run-browser": "^2.0.2",
     "standard": "^10.0.0",
