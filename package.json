@@ -26,6 +26,12 @@
     "tape": "^4.6.0",
     "tape-run": "^3.0.0"
   },
+  "greenkeeper": {
+    "ignore": [
+      "hapi",
+      "moonboots_hapi"
+    ]
+  },
   "homepage": "https://github.com/lukekarrys/ampersand-main-view",
   "keywords": [
     "ampersand",
